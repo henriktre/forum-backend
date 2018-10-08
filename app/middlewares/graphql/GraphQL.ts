@@ -1,7 +1,9 @@
 import Router from "koa-router";
 import { buildSchema } from 'graphql';
+//import cors from '@koa/cors@2';
 import Schema from './Schema';
-import Resolvers from './resolvers/UserResolver';
+import Resolvers from './Resolvers';
+const cors = require('@koa/cors');
 const graphqlHTTP = require('koa-graphql');
 
 class GraphQLMiddleware {
@@ -47,6 +49,7 @@ class GraphQLMiddleware {
    * @next {NextFunction} Execute the next method.
    */
   public mount(): void {
+    this.router.use(cors());
     this.router.all('/', graphqlHTTP({
       graphiql: true,
       schema: this.schema(),

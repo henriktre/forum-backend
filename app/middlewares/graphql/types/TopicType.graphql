@@ -1,9 +1,78 @@
+
+
+type CategoryEdge {
+  node: Category
+}
+type CategoryList {
+  edges: [CategoryEdge]
+  error: Error
+}
 type Category {
   name: String
+  id: String
+  error: Error
+}
+
+
+type TopicEdge {
+  node: Topic
+}
+type TopicList {
+  edges: [TopicEdge]
+  error: Error
+}
+
+type MessageList {
+  edges: [MessageEdge]
+  error: Error
+}
+type MessageEdge {
+  node: Message
 }
 
 type Topic {
+  id: String,
   category: Category
-  name: String
-  user: User
+  timestamp: String
+  owner: User
+  body: String
+  title: String
+  comments: MessageList
+  error: Error
+}
+
+
+type Message {
+  body: String
+  timestamp: String
+  owner: User
+  likes: [User]
+  error: Error
+}
+
+
+
+type Query {
+  topic(id: String!): Topic!
+
+  topics(category: String!, page: Int, size: Int): TopicList!
+
+  categories: CategoryList!
+  category(id: String!): Category!
+}
+
+
+type Mutation {
+  createTopic(category: String!, title: String!, body: String!): Topic!
+  editTopic: Topic!
+  deleteTopic: Topic!
+
+  createMessage(topic: String!, body: String!): Message!
+  editMessage: Message!
+  deleteMessage: Message!
+
+  # For admins 
+  createCategory(name: String!): Category!
+  editCategory(id: String!, name: String!): Category!
+  deleteCategory(id: String!): Category!
 }

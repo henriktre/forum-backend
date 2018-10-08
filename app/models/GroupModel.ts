@@ -81,6 +81,7 @@ UserSchema.statics.findUser = function(username: string) {
 UserSchema.statics.findUserByID = function(id: string) {
   return new Promise(async (resolve, reject) => {
     const user = await this.findById(id);
+    console.log(user);
     if (!user) {
       return reject(Boom.conflict('Unable to find user with by id'));
     }
@@ -98,6 +99,23 @@ UserSchema.statics.attachToken = function(user: UserInterface){
   });
 }
 
+//UserSchema.statics.updateToken = function(data, token) {
+    //return new Promise((resolve, reject) => {
+        //console.log(token);
+        //let d = new Date();
+        //d.setHours(d.getHours() + 1);
+        
+        //this.findOneAndUpdate({token}, { $set: {
+            //spotifyToken: data.access_token, 
+            //refreshToken: data.refresh_token,
+            //expires: d
+        //}}, { new: true }).exec()
+        //.then(user => {
+            //resolve(user);
+        //})
+        //.catch(err => reject(err))
+    //})
+//}
 
 export default mongoose.model('UserModel', UserSchema, 'users');
 export {

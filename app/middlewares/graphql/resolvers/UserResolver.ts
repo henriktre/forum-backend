@@ -17,12 +17,12 @@ export default {
     };
   },
 
-  me: async(_:any, ctx: Context) => {
+  me: async(_:any, ctx: any) => {
     try{
       if (!ctx.state.user) {
         throw Boom.unauthorized('You are not authenticated');
       }
-      const user = await UserModel.findUserByID(ctx.state.user.id);
+      const user = await UserModel.findUserByID(ctx.state.user.id, ctx.cacher);
       await UserModel.attachToken(user);
 
       return user;
@@ -35,7 +35,6 @@ export default {
       }
       return {};
     }
-    
   },
 
 

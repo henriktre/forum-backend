@@ -1,8 +1,6 @@
-# Octane-WebAPI
+# Insecurity form
 
-Octane WebAPI is the beating heart of octane cms. This contains all the backend logic for the content management system.
-The goal of this repository is to build an efficient and bug free backend service with 100% test coverage.
-
+Insecurity forum is a school assignment where the end goal is creating a working and secure forum.
 
 ## Getting Started
 
@@ -22,13 +20,10 @@ mongodb
 ### Installing
 
 To run the backend server on your local machine install everything required.
-Then run `sudo mongod` to start your mongodb process.
-Once this is done you can run `npm start` to run the node process.
+Start your mongodb server and set the right config values in `app/config.ts`
+Once this is done you can run `npm run serve` to run the node process.
 Before doing any changes make sure the version you are using is working by running `npm test`
 Once this is done you can safely continue the development.
-
-
-
 
 
 ## Running the tests
@@ -38,67 +33,12 @@ and run the test suite by typing `ava` in the terminal window, or simply running
 
 The server should **NOT** be running while you are running tests. This can result in a listen EADDRINUSE error as the port is already occupied by the running process.
 
-
-### Documentation
-
-The api documentation can be found under documentation/api and should be up to date with the latest version of the software.
-[apidoc](http://apidocjs.com/)
-
-To ensure that the API endpoints are well documented we use `apidoc` You will need to write request and response documentation for all endpoints.
-These follow the `apidoc` syntax and needs to be detailed with all error codes and return values.
-To generate the documentation website run `npm run doc` this will trigger autogeneration of the documentation website.
-
-Like described below, Notice multiple error messages.
-```
-/**
- * @api {post} /auth Request Authentication token
- * @apiName Authenticate
- * @apiGroup Authentication
- *
- * @apiParam {String} email Users email adress.
- * @apiParam {String} password Users password.
- *
- * @apiSuccess {String} email Email of the User.
- * @apiSuccess {String} firstname Firstname of the User.
- * @apiSuccess {String} lastname  Lastname of the User.
- * @apiSuccess {Object} settings  Settings object of the User.
- * @apiSuccess {String} token  Access token to the User.
- *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     {
- *       "email": "John@doe.com",
- *       "lastname": "Doe",
- *       "firstname": "John",
- *       "token": "ejg2903gj2eigjwdgjepg293gj",
- *       "settings": {
- *         "key": "value"
- *       }
- *     }
- *
- * @apiError AuthenticationFailed The username or password does not match.
- * @apiError MissingInput Username and password is required to sign in.
- *
- * @apiErrorExample Credential missmatch:
- *     HTTP/1.1 403 Not Found
- *     {
- *       "error": "Invalid username or password"
- *     }
- *
- * @apiErrorExample Missing fields:
- *     HTTP/1.1 400 Not Found
- *     {
- *       "error": "Missing fields"
- *     }
- */
-```
-
 ### Development
 
 To ensure good code practice tests should be written before any code.
-Any code submitted to the project should be set as a pull request to the current sprint number.
+Any code submitted to the project should be set as a pull request.
 and can be safely merged once the test's have passed.
-At the end of a sprint this branch will be cherry picked and pulled into the next version if it passes the code review.
+
 
 #### Testing
 
@@ -130,7 +70,6 @@ For coding style we follow the `airbnb` js linter style.
 You should install eslint with the required tools to make sure your code is following
 the right style guide.
 
-
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/Glasier/Octane-Server/tags).
@@ -138,9 +77,9 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Bjarte Klyve Larsen** - *Initial work and development* - [Klyve](https://github.com/klyve)
-
-See also the list of [contributors](https://github.com/Glasier/Octane-Server/graphs/contributors) who participated in this project.
+* Morten Omholt-Jensen - *Initial work and development* - [Mortenoj](https://github.com/mortenoj)
+* Jørgen Hanssen - *Initial work and development* - [Hanssen97](https://github.com/hanssen97)
 
 ## License
 
-This project is **not** licensed under any specific license - see the [LICENSE.md](LICENSE.md) file for details
+This software is protected by the MIT license, see `LICENSE.md` for more information

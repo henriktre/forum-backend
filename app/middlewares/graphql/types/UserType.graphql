@@ -1,20 +1,33 @@
+type Group {
+  name: String
+  access: [Access]
+  error: Error
+}
+
+type Access {
+  name: String
+  error: Error
+}
+
 type User {
   username: String
+  groups: [Group]
+  error: Error
 }
 
 type Me {
   username: String
   email: String
-  token: String
   settings: Settings
+  access: [Access]
+  groups: [Group]
   error: Error
+  token: String
 }
 
 type Settings {
   language: String
 }
-
-
 
 type Query {
   "Get a user by username"

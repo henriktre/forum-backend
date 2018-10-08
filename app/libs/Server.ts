@@ -1,5 +1,3 @@
-//import bodyParser from "koa-bodyparser";
-//
 import Koa from "koa";
 import Router from "koa-router";
 import logger from "koa-morgan";
@@ -7,6 +5,7 @@ import * as middlewares from '../middlewares/server';
 import * as controllers from '../controllers';
 import Boom from "boom";
 import GraphQL from '../middlewares/graphql/GraphQL';
+import Cacher from './Cacher';
 
 const bodyParser = require('koa-bodyparser');
 const errorHandler = require('koa-error');
@@ -77,6 +76,7 @@ class Server {
     
     // add JWT middleware
     this.app.use(jwt({secret: 'mysecret', passthrough: true}));
+    this.app.use(Cacher.bootstrap());
     // catch 404 and forward to error handler
     //this.app.use((ctx, next) => {
       //ctx.response.status = 404;

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Glasier/Octane-WebAPI#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "@types/bcrypt": "^3.0.0",
     "@types/mongoose": "^5.2.18",
     "bcrypt": "^3.0.1",
