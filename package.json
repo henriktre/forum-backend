@@ -1,0 +1,83 @@
+{
+  "name": "octane-webapi",
+  "version": "0.0.1",
+  "description": "Octane web api",
+  "main": "bin/www",
+  "scripts": {
+    "test": "tsc && ava",
+    "serve": "npm run build && concurrently --kill-others \"tsc -w\" \"nodemon bin/wwww\"",
+    "build": "rm -rf dist && mkdir dist && tsc && npm run copyfiles",
+    "copyfiles": "echo Copying files && mkdir -p dist/middlewares/graphql/types && copyfiles -f app/**/*.graphql dist/middlewares/graphql/types",
+    "lint": "tslint -c tslint.json 'app/**/*.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glasier/Octane-WebAPI.git"
+  },
+  "author": "Bjarte Klyve Larsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/klyve/Octane-WebAPI/issues"
+  },
+  "homepage": "https://github.com/Glasier/Octane-WebAPI#readme",
+  "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/mongoose": "^5.2.18",
+    "bcrypt": "^3.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "boom": "^7.2.0",
+    "debug": "^3.1.0",
+    "graphql": "^0.13.2",
+    "jsonwebtoken": "^8.3.0",
+    "koa": "^2.5.3",
+    "koa-bodyparser": "^4.2.1",
+    "koa-error": "^3.2.0",
+    "koa-errorhandler": "^0.1.1",
+    "koa-graphql": "^0.7.5",
+    "koa-jwt": "^3.5.1",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^7.4.0",
+    "merge-graphql-schemas": "^1.5.7",
+    "method-override": "^2.3.10",
+    "mongoose": "^5.3.1",
+    "morgan": "^1.9.0",
+    "winston": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/boom": "^7.2.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/errorhandler": "0.0.32",
+    "@types/express": "^4.11.1",
+    "@types/express-graphql": "^0.6.1",
+    "@types/graphql": "^0.13.1",
+    "@types/koa": "^2.0.46",
+    "@types/koa-bodyparser": "^5.0.1",
+    "@types/koa-jwt": "^3.3.0",
+    "@types/koa-morgan": "^1.0.4",
+    "@types/koa-router": "^7.0.32",
+    "@types/method-override": "0.0.31",
+    "@types/morgan": "^1.7.35",
+    "@types/supertest": "^2.0.4",
+    "ava": "^0.25.0",
+    "concurrently": "^3.5.1",
+    "copyfiles": "^2.1.0",
+    "nodemon": "^1.17.5",
+    "supertest": "^3.1.0",
+    "tslint": "^5.10.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "typescript": "^2.9.1"
+  },
+  "ava": {
+    "files": [
+      "!dist/tests/setup/*.js",
+      "dist/tests/**/*.js"
+    ],
+    "cache": false,
+    "concurrency": 5,
+    "failFast": true,
+    "failWithoutAssertions": false,
+    "tap": false,
+    "compileEnhancements": false
+  }
+}

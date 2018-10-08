@@ -1,0 +1,99 @@
+#!/usr/bin/env node
+
+//module dependencies
+const server = require("../dist/libs/Server");
+const debug = require("debug")("insecurity:server");
+const http = require("http");
+const winston = require("winston");
+const mongoose = require("mongoose");
+const DBconfig = require('../dist/config/mongoose');
+
+//create http server
+const httpPort = normalizePort(process.env.PORT || 8080);
+const app = server.default.bootstrap().app;
+const httpServer = http.createServer(app.callback());
+const isCLI = !module.parent;
+
+if(isCLI) {
+    // Set mongoose promise to global promise library
+    mongoose.Promise = global.Promise;
+    // Mongoose connect to the database
+    mongoose.connect(DBconfig.uri, DBconfig.options).then(
+        () => {
+          winston.info('Mongoose server connected');
+        },
+        err => {
+          winston.error('Mongoose error', err);
+        }
+    );
+    //listen on provided ports
+    httpServer.listen(httpPort);
+
+    //add error handler
+    httpServer.on("error", onError);
+
+    //start listening on port
+    httpServer.on("listening", onListening);
+}
+
+
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  const bind = typeof port === "string"
+    ? "Pipe " + port
+    : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+function onListening() {
+  const addr = httpServer.address();
+  const bind = typeof addr === "string"
+    ? "pipe " + addr
+    : "port " + addr.port;
+  debug("Listening on " + bind);
+}
+
+
+module.exports = app;

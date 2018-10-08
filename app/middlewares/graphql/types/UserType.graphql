@@ -1,0 +1,33 @@
+type User {
+  username: String
+}
+
+type Me {
+  username: String
+  email: String
+  token: String
+  settings: Settings
+  error: Error
+}
+
+type Settings {
+  language: String
+}
+
+
+
+type Query {
+  "Get a user by username"
+  user(username: String!): User
+
+  "Get myself"
+  me: Me
+}
+
+
+type Mutation {
+  register(email: String!, password: String!, username: String!): Me!
+
+  "Log the user in"
+  login(username: String!, password: String!): Me!
+}

@@ -1,0 +1,9 @@
+type Category {
+  name: String
+}
+
+type Topic {
+  category: Category
+  name: String
+  user: User
+}

@@ -1,0 +1,10 @@
+type Query {
+  "Hello is just a test"
+  hello: String
+}
+
+type Error {
+  error: String
+  message: String
+  statusCode: Int
+}
