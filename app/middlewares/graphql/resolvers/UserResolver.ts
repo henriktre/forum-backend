@@ -104,9 +104,9 @@ export default {
         throw Boom.unauthorized('You are not authenticated');
       }
       const user = await UserModel.findUserByID(ctx.state.user.id);
-      data.password = await bcrypt.hash(data.password, 10);
-      if (data.password != user.password) {
-        throw Boom.badData('Your old password is not correct');
+      const valid = await bcrypt.compare(data.password, user.password)
+      if(!valid) {
+        throw Boom.unauthorized('Invalid password');
       }
       if(data.newPassword != data.repeatPassword) {
         throw Boom.badData('Your new passwords does not match');
@@ -134,9 +134,9 @@ export default {
         throw Boom.unauthorized('You are not authenticated');
       }
       const user = await UserModel.findUserByID(ctx.state.user.id);
-      data.password = await bcrypt.hash(data.password, 10);
-      if (data.password != user.password) {
-        throw Boom.badData('Your password is not correct');
+      const valid = await bcrypt.compare(data.password, user.password)
+      if(!valid) {
+        throw Boom.unauthorized('Invalid password');
       }
       const email = data.email
       const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
