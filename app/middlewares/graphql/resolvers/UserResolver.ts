@@ -44,11 +44,8 @@ export default {
       await UserModel.attachToken(user);
       const topics = await TopicModel.findByUser(ctx.state.user.id);
       const messages = await MessageModel.findByUser(ctx.state.user.id);
-      return {
-        ...user,
-        topics: topics.map((topic:any) => ({node: topic})),
-        messages: messages.map((message:any) => ({node: message})),
-      }
+      user.topics = topics.map((topic:any) => ({node: topic}));
+      user.messages = messages.map((message:any) => ({node: message}));
 
       return user;
     }catch(err) {
