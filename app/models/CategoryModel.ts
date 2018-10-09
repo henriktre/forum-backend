@@ -59,6 +59,22 @@ CategorySchema.statics.getCategory = function(id: string) {
   });
 }
 
+CategorySchema.index({
+  name: 'text',
+});
+CategorySchema.statics.search = function(val: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const value = this.find({$text: {$search: val}});
+      resolve(value);
+    }catch(err) {
+      if(Boom.isBoom(err)) reject(err);
+      reject(Boom.badImplementation('Internal server error'));
+    }
+  });
+}
+
+
 
 export default mongoose.model('CategoryModel', CategorySchema, 'categories');
 

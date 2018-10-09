@@ -17,6 +17,7 @@ const isCLI = !module.parent;
 if(isCLI) {
     // Set mongoose promise to global promise library
     mongoose.Promise = global.Promise;
+    mongoose.set('useCreateIndex', true);
     // Mongoose connect to the database
     mongoose.connect(DBconfig.uri, DBconfig.options).then(
         () => {

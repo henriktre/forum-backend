@@ -50,6 +50,11 @@ type Message {
   error: Error
 }
 
+type SearchBody {
+  topic: TopicList
+  category: CategoryList
+  error: Error
+}
 
 
 type Query {
@@ -59,6 +64,7 @@ type Query {
 
   categories: CategoryList!
   category(id: String!): Category!
+  search(value: String!): SearchBody!
 }
 
 
