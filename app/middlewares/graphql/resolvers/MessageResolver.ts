@@ -3,6 +3,7 @@ import {Context} from 'koa';
 const Boom = require('boom')
 import TopicModel from '../../../models/TopicModel';
 import MessageModel from '../../../models/MessageModel';
+import UserModel from '../../../models/UserModel';
 
 
 
@@ -21,7 +22,8 @@ export default {
         messageID: message.id,
         id: args.topic,
       });
-
+      const user = await UserModel.findUserByID(ctx.state.user.id);
+      message.owner = user
       return message;
     }catch(err) {
       if (Boom.isBoom(err)) {

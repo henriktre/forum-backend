@@ -22,7 +22,7 @@ export default {
         body: topic.body,
         title: topic.title,
         comments: {edges: messages.map(async(message:any) => {
-          const mu = await UserModel.findUserByID(topic.user, ctx.cacher);
+          const mu = await UserModel.findUserByID(message.user, ctx.cacher);
           message.owner = mu;
           return {node:message};
         })},
@@ -79,6 +79,8 @@ export default {
       if(!topic) {
         throw Boom.unauthorized('You are not allowed to perform this action');
       }
+      const user = await UserModel.findUserByID(ctx.state.user.id);
+      topic.owner = user
 
       return topic;
     }catch(err) {
