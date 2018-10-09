@@ -46,12 +46,8 @@ export default {
       const messages = await MessageModel.findByUser(ctx.state.user.id);
       return {
         ...user,
-        topics: {
-          edges: topics.map((topic:any) => ({node: topic}))
-        },
-        messages: {
-          edges: messages.map((message:any) => ({node: message}))
-        },
+        topics: topics.map((topic:any) => ({node: topic})),
+        messages: messages.map((message:any) => ({node: message})),
       }
 
       return user;
