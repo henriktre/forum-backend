@@ -160,8 +160,9 @@ export default {
       if (!ctx.state.user) {
         throw Boom.unauthorized('You are not authenticated');
       }
+      const settings = await parseSettings(data.settings);
       const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
-        settings: parseSettings(data.settings),
+        settings,
       });
 
       return updatedUser;
