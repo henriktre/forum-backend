@@ -103,7 +103,7 @@ export default {
       if (!ctx.state.user) {
         throw Boom.unauthorized('You are not authenticated');
       }
-      const user = await UserModel.findUserByID(ctx.state.user);
+      const user = await UserModel.findUserByID(ctx.state.user.id);
       data.password = await bcrypt.hash(user.password, 10);
       if (data.password != user.password) {
         throw Boom.badData('Your old password is not correct');
@@ -112,7 +112,7 @@ export default {
         throw Boom.badData('Your new passwords does not match');
       }
       const password = await bcrypt.hash(data.newPassword, 10);
-      const updatedUser = await UserModel.updateUser(ctx.state.user, {
+      const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
         password,
       });
 
@@ -133,13 +133,13 @@ export default {
       if (!ctx.state.user) {
         throw Boom.unauthorized('You are not authenticated');
       }
-      const user = await UserModel.findUserByID(ctx.state.user);
+      const user = await UserModel.findUserByID(ctx.state.user.id);
       data.password = await bcrypt.hash(user.password, 10);
       if (data.password != user.password) {
         throw Boom.badData('Your password is not correct');
       }
       const email = data.email
-      const updatedUser = await UserModel.updateUser(ctx.state.user, {
+      const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
         email,
       });
 
@@ -160,7 +160,7 @@ export default {
       if (!ctx.state.user) {
         throw Boom.unauthorized('You are not authenticated');
       }
-      const updatedUser = await UserModel.updateUser(ctx.state.user, {
+      const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
         settings: parseSettings(data.settings),
       });
 
