@@ -47,6 +47,6 @@ type Mutation {
   login(username: String!, password: String!): Me!
   
   changeEmail(email: String!, password: String!): Me!
-  changePassword(password: String!, newPassword: String!, repeatPassword: String!): Me!
+  changePassword(password: String!, newPassword: String!): Me!
   changeSettings(settings: String!): Me!
 }

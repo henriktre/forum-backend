@@ -27,7 +27,6 @@ interface UserChangeEmail {
 interface UserChangePassword {
   password: string,
   newPassword: string,
-  repeatPassword: string,
 }
 interface UserChangeSettings {
   settings: string,

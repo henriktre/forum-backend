@@ -114,9 +114,6 @@ export default {
       if(!valid) {
         throw Boom.unauthorized('Invalid password');
       }
-      if(data.newPassword != data.repeatPassword) {
-        throw Boom.badData('Your new passwords does not match');
-      }
       const password = await bcrypt.hash(data.newPassword, 10);
       const updatedUser = await UserModel.updateUser(ctx.state.user.id, {
         password,
