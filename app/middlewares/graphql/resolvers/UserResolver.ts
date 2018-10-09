@@ -47,10 +47,10 @@ export default {
       return {
         ...user,
         topics: {
-          edges: topics.map(topic => ({node: topic}))
+          edges: topics.map((topic:any) => ({node: topic}))
         },
         messages: {
-          edges: messages.map(message => ({node: message}))
+          edges: messages.map((message:any) => ({node: message}))
         },
       }
 
