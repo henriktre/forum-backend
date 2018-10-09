@@ -97,6 +97,7 @@ UserSchema.statics.updateUser = function(id: string, data: object) {
       if(!update) {
         reject(Boom.badImplementation('Unable to update the user'));
       }
+      resolve(update);
     }catch(err) {
       if (Boom.isBoom(err)) reject(err);
       reject(Boom.badImplementation('Internal server error'));
