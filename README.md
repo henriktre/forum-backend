@@ -25,50 +25,9 @@ Once this is done you can run `npm run serve` to run the node process.
 Before doing any changes make sure the version you are using is working by running `npm test`
 Once this is done you can safely continue the development.
 
+Before starting the dockerized process you need to run `npm run build` which builds the target application.
+To run the application make sure you have `docker` and `docker-compose ` installed. You can not run the application by running the `docker-compose up` command.
 
-## Running the tests
-
-To run the test you can install ava globally by running `npm install -g ava`
-and run the test suite by typing `ava` in the terminal window, or simply running `npm test`
-
-The server should **NOT** be running while you are running tests. This can result in a listen EADDRINUSE error as the port is already occupied by the running process.
-
-### Development
-
-To ensure good code practice tests should be written before any code.
-Any code submitted to the project should be set as a pull request.
-and can be safely merged once the test's have passed.
-
-
-#### Testing
-
-##### Model tests
-
-```
-Every static function in a model should be tested to make sure the expected result is returned
-```
-
-##### API Tests
-
-```
-Every api endpoint should be tested to make sure they return the right value.
-You should make sure that missing parameters do not break the code and
-that the right access to run the certain operations are met.
-```
-
-##### General tests
-
-```
-Every piece of code should be tested this include helper functions and middleware etc.
-This is to ensure that there are no software breaking bugs.
-```
-
-
-### And coding style tests
-
-For coding style we follow the `airbnb` js linter style.
-You should install eslint with the required tools to make sure your code is following
-the right style guide.
 
 ## Versioning
 
