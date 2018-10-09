@@ -23,6 +23,8 @@ type Me {
   groups: [Group]
   error: Error
   token: String
+  topics: [TopicEdge]
+  messages: [MessageEdge]
 }
 
 type Settings {

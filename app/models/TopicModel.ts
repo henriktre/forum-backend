@@ -77,7 +77,25 @@ TopicSchema.statics.findByID = function(id: string) {
     try {
       const topic = await this.findById(id);
       if (!topic) {
-        return reject(Boom.conflict('Unable to find topic with by id'));
+        return reject(Boom.conflict('Unable to find topic by id'));
+      }
+      // attach messages here
+      resolve(topic)
+    }catch(err) {
+      if(Boom.isBoom(err)) reject(err);
+      reject(Boom.badImplementation('Internal server error'));
+    }
+  });
+}
+
+TopicSchema.statics.findByUser = function(id: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const topic = await this.find({
+        user: id,
+      });
+      if (!topic) {
+        return reject(Boom.conflict('Unable to find topic by user id'));
       }
       // attach messages here
       resolve(topic)

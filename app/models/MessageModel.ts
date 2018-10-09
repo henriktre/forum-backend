@@ -55,6 +55,24 @@ MessageSchema.statics.getMessage = function(id: string) {
   });
 }
 
+MessageSchema.statics.findByUser = function(id: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const message = await this.find({
+        created_by: id,
+      });
+      if (!message) {
+        return reject(Boom.conflict('Unable to find messages by user id'));
+      }
+      // attach messages here
+      resolve(message)
+    }catch(err) {
+      if(Boom.isBoom(err)) reject(err);
+      reject(Boom.badImplementation('Internal server error'));
+    }
+  });
+}
+
 
 export default mongoose.model('MessageModel', MessageSchema, 'messages');
 

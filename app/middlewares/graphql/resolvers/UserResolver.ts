@@ -1,4 +1,6 @@
 import { UserModel } from '../../../models/index';
+import TopicModel from '../../../models/TopicModel';
+import MessageModel from '../../../models/MessageModel';
 import {
   RegisterInterface,
   LoginInterface,
@@ -40,6 +42,17 @@ export default {
       }
       const user = await UserModel.findUserByID(ctx.state.user.id, ctx.cacher);
       await UserModel.attachToken(user);
+      const topics = await TopicModel.findByUser(ctx.state.user.id);
+      const messages = await MessageModel.findByUser(ctx.state.user.id);
+      return {
+        ...user,
+        topics: {
+          edges: topics.map(topic => ({node: topic}))
+        },
+        messages: {
+          edges: messages.map(message => ({node: message}))
+        },
+      }
 
       return user;
     }catch(err) {
