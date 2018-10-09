@@ -20,7 +20,18 @@ interface UserInterface {
   token: string,
   refreshToken: string,
 };
-
+interface UserChangeEmail {
+  email: string,
+  password: string,
+}
+interface UserChangePassword {
+  password: string,
+  newPassword: string,
+  repeatPassword: string,
+}
+interface UserChangeSettings {
+  settings: string,
+}
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
@@ -78,13 +89,32 @@ UserSchema.statics.findUser = function(username: string) {
   });
 }
 
+UserSchema.statics.updateUser = function(id: string, data: object) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await this.findUserByID(id);
+      const update = this.findByIdAndUpdate(user._id, data);
+      if(!update) {
+        reject(Boom.badImplementation('Unable to update the user'));
+      }
+    }catch(err) {
+      if (Boom.isBoom(err)) reject(err);
+      reject(Boom.badImplementation('Internal server error'));
+    }
+  })
+}
+
 UserSchema.statics.findUserByID = function(id: string) {
   return new Promise(async (resolve, reject) => {
-    const user = await this.findById(id);
-    if (!user) {
-      return reject(Boom.conflict('Unable to find user with by id'));
+    try{
+      const user = await this.findById(id);
+      if (!user) {
+        reject(Boom.conflict('Unable to find user with by id'));
+      }
+      resolve(user)
+    }catch(err) {
+      reject(Boom.conflict('Unable to find user with by id'));
     }
-    resolve(user)
   });
 }
 
@@ -103,4 +133,7 @@ export default mongoose.model('UserModel', UserSchema, 'users');
 export {
   RegisterInterface,
   LoginInterface,
+  UserChangeSettings,
+  UserChangeEmail,
+  UserChangePassword,
 };
