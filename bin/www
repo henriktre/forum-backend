@@ -25,6 +25,7 @@ if(isCLI) {
         },
         err => {
           winston.error('Mongoose error', err);
+          process.exit(1);
         }
     );
     //listen on provided ports
