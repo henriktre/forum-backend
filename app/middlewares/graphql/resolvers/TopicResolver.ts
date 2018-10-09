@@ -22,7 +22,7 @@ export default {
         body: topic.body,
         title: topic.title,
         comments: {edges: messages.map(async(message:any) => {
-          const mu = await UserModel.findUserByID(message.user, ctx.cacher);
+          const mu = await UserModel.findUserByID(message.created_by, ctx.cacher);
           message.owner = mu;
           return {node:message};
         })},
