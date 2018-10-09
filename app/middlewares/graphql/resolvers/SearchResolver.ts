@@ -2,6 +2,7 @@ const Boom = require('boom');
 
 import CategoryModel from '../../../models/CategoryModel';
 import TopicModel from '../../../models/TopicModel';
+import UserModel from '../../../models/UserModel';
 
 export default {
 
@@ -11,10 +12,20 @@ export default {
       const categories = await CategoryModel.search(args.value)
       return {
         category: {
-          edges: categories.map((c:any) => ({node:c})),
+          edges: categories.map(async (c:any) => {
+            return {
+              node: c,
+            };
+          }),
         },
         topic: {
-          edges: topics.map((t:any) => ({node:t})),
+          edges: topics.map(async (c:any) => {
+            const mu = await UserModel.findUserByID(c.user, ctx.cacher);
+            c.owner = mu;
+            return {
+              node: c,
+            };
+          }),
         },
       }
     }catch(err) {
