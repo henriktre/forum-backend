@@ -11,6 +11,19 @@ const bcrypt = require('bcryptjs')
 const Boom = require('boom')
 
 
+function parseSettings(data: string): Promise<any> {
+  return new Promise((resolve, reject) => {
+    try {
+      const obj = JSON.parse(data);
+      resolve({
+        language: obj.language.toString(),
+      });
+    }catch(err) {
+      reject(Boom.badData('Invalid data structure for settings'));
+    }
+  });
+}
+
 
 export default {
 
@@ -148,7 +161,7 @@ export default {
         throw Boom.unauthorized('You are not authenticated');
       }
       const updatedUser = await UserModel.updateUser(ctx.state.user, {
-        settings: JSON.parse(data.settings),
+        settings: parseSettings(data.settings),
       });
 
       return updatedUser;
