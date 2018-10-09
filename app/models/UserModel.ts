@@ -93,7 +93,7 @@ UserSchema.statics.updateUser = function(id: string, data: object) {
   return new Promise(async (resolve, reject) => {
     try {
       const user = await this.findUserByID(id);
-      const update = this.findByIdAndUpdate(user._id, data);
+      const update = this.findByIdAndUpdate(user._id, data, {new: true});
       if(!update) {
         reject(Boom.badImplementation('Unable to update the user'));
       }
